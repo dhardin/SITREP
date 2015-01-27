@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="lib/foundation/css/foundation.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="lib/jquery-ui/jquery-ui.css" />
+    <script type="text/javascript" src="lib/jquery.js"></script>
+    <script type="text/javascript" src="lib/jquery-ui/jquery-ui.js"></script>
+    <script type="text/javascript" src="lib/foundation/js/foundation.min.js"></script>
+    <script type="text/javascript" src="lib/foundation/js/vendor/modernizr.js"></script>
+    <script type="text/javascript" src="lib/underscore.js"></script>
+    <script type="text/javascript" src="lib/backbone.js"></script>
+    <script type="text/javascript" src="lib/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="lib/ckeditor/adapters/jquery.js"></script>
+</head>
+
+<body>
+    <div class="contain-to-grid sticky">
+        <nav id="nav" class="top-bar" data-topbar role="navigation">
+            <ul class="title-area">
+                <li class="name">
+                    <h1>
+                    	<a>
+                    	<span class="show-for-medium-up">SITREP</span>
+                    	<span class="show-for-small-only">
+                    		SITREP
+                    		<span class="date-label">
+                    			<span class='startDate'>--/--/----</span> to <span class='endDate'>--/--/----</span>
+                    		</span>
+                		</span>
+                    	</a>
+                    </h1>
+                </li>
+                <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a>
+                </li>
+            </ul>
+            <section class="top-bar-section">
+                <ul class="left show-for-medium-up">
+                    <li class="success">
+                        <a href="#new" class="text-center">Create New Item</a>
+                    </li>
+                </ul>
+                <ul class="right">
+                    <!-- MEDIUM AND UP -->
+                    <li class="date-display has-dropdown show-for-medium-up">
+                        <a class="text-center"><span class='startDate'>--/--/----</span> to <span class='endDate'>--/--/----</span></a>
+                        <ul class="dropdown">
+                            <li class="date-container info">
+                                <a class="selectDate large text-center">Select Date</a>
+                            </li>
+                            <li class="alert">
+                                <a class="clearDate text-center">Clear Date</a>
+                            </li>
+                        </ul>
+                        <div type="text" class="week-picker large"></div>
+                    </li>
+                    <!-- SMALL ONLY -->
+                     <li class="success show-for-small-only">
+                        <a href="#new" class="text-center">Create New Item</a>
+                    </li>
+                    <li class="info date-container show-for-small-only has-dropdown">
+                        <a class="selectDate text-center">Select Date</a>
+                        <ul class="dropdown">
+                            <li>
+                                <div type="text" class="week-picker small"></div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="alert show-for-small-only">
+                        <a class="clearDate text-center">Clear Date</a>
+                    </li>
+
+                    </li>
+                    <!-- MEDIUM AND UP -->
+                    <li class="divider show-for-medium-up"></li>
+
+                    <li class="has-form  show-for-medium-up">
+                        <a class="no-pointer">Search</a>
+                    </li>
+                    <!-- SMALL AND UP -->
+                    <li class="has-form">
+                        <div class="row collapse">
+                            <div class="small-12 columns">
+                                <input id="search" type="text" placeholder="Type to find stuff">
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+        </nav>
+    </div>
+
+    <div id="main"></div>
+
+    <script type="text/template" id="edit-item-template">
+        <ul class="button-group stack-for-small">
+            <li><a class="button" id='saveBtn'>Save</a>
+            </li>
+            <li><a class="button" id='deleteBtn'>Delete</a>
+            </li>
+            <li><a class="button" id='closeBtn'>Close</a>
+            </li>
+        </ul>
+        <form data-abide>
+            <div class="alert-box radius hidden" data-alert><span class="msg"><%=status%><%=statusText%></span>
+            </div>
+            <div class="row">
+                <div class="small-12 medium-6 large-6 columns">
+                    <div class="text-field">
+                        <label>Department <small class="required">Required</small>
+                            <select data-sp-name="Department" class="data" value="<%=department%>">
+                                <option value="">N/A</option>
+                                <option value="PD A">PD A</option>
+                                <option value="PD B">PD B</option>
+                                <option value="PD C">PD C</option>
+                                <option value="SE">Systems Engineering</option>
+                                <option value="Log">Logistics</option>
+                                <option value="BMO">Business Management</option>
+                                <option value="Test">PdM Test</option>
+                            </select>
+                        </label>
+                        <small class="error">Department is required.</small>
+                    </div>
+                </div>
+                <div class="small-6 medium-3 columns">
+                    <div class="text-field">
+                        <label>Created
+                            <input type="text" value="<%=created%>" disabled/>
+                        </label>
+                    </div>
+                </div>
+                 <div class="small-6 medium-3 columns">
+                    <div class="text-field">
+                        <label>Last Modified
+                            <input type="text" value="<%=modified%>" disabled/>
+                        </label>
+                    </div>
+                </div>
+                <div class="small-12 columns">
+                    <div class="text-field">
+                        <label>Description <small class="required">Required</small>
+                            <textarea id="description" data-sp-name="Description" class="data">
+                                <%=description%>
+                            </textarea>
+                        </label>
+                        <small class="error">Description is required and cannot be blank.</small>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </script>
+
+    <script type="text/template" id="collection-template">
+        <ul id="items"></ul>
+    </script>
+    <script type="text/template" id="group-template">
+        <h1 class="title"></h1>
+        <ul class="items"></ul>
+    </script>
+
+    <script type="text/template" id="list-item-template">
+        <div class="alert-box radius hidden" data-alert><span class="msg"><%=status%><%=statusText%></span>
+        </div>
+        <h1 class="item-title"><%=department%></h1>
+         <h6 class="subheader">Created: <%=created%></h6>
+        <h6 class="subheader">Last Modified: <%=modified%></h6>
+        <div class="text-right">
+            <a class="show-more">Show More</a>
+        </div>
+        <div class="description collapse">
+            <%=description%>
+        </div>
+        <div class="text-right">
+            <a class="show-more top">Show More</a>
+        </div>
+        <ul class="button-group stack-for-small">
+            <li><a class="editBtn button">Edit</a>
+            </li>
+            <li><a class="deleteBtn button alert">Delete</a>
+            </li>
+        </ul>
+    </script>
+
+    <script type="text/template" id="noItemsTemplate">
+        <div class="text-center library-message">
+            <p>You don't seem to have any items :(</p>
+            <p>Let's try adding some!</p>
+        </div>
+    </script>
+
+    <script type="text/template" id="fetchingItemsTemplate">
+        <div class="text-center library-message">
+            <p>Fetching data...</p>
+        </div>
+    </script>
+
+    
+    <!-- Models -->
+    <script src="js/models/item.js"></script>
+    <script src="js/models/library.js"></script>
+    <!-- Views -->
+    <script src="js/views/item.js"></script>
+    <script src="js/views/item.edit.js"></script>
+    <script src="js/views/item.list.js"></script>
+    <script src="js/views/library.js"></script>
+    <script src="js/views/nav.js"></script>
+    <script src="js/views/app.js"></script>
+    <!-- Application -->
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+
+    <!-- Router -->
+    <script src="js/routes/routes.js"></script>
+
+    <script type="text/javascript">
+    $(document).foundation();
+    </script>
+
+</body>
+
+</html>

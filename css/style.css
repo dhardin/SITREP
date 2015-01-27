@@ -1,0 +1,103 @@
+ body, div{overflow: none !important;}
+ nav{
+  max-width: inherit !important;
+ }
+ #main {
+  padding-top: 10px;
+ }
+
+#items {
+	list-style-type: none !important;
+	margin: 0;
+}
+#search {
+	height: 100%;
+}
+.list-item {
+	background-color: #F5F5F5;
+	padding: 10px;
+	border-bottom: 1px solid #ddd;
+	list-style-type: none !important;
+}
+
+.item-title {
+	font-variant: small-caps;
+}
+
+.required {
+	color: #f00;
+}
+
+.alert-box.hidden {
+	visibility: hidden;
+}
+
+.library-message {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateY(-50%);
+}
+.description.collapse {
+    text-overflow: ellipsis;
+    height: 1.5em;
+  overflow-y: hidden;
+}
+
+.description.expand {
+  text-overflow: inherit;
+  height: auto;
+  overflow-y: display;
+}
+
+#tools-menu {position: relative;}
+
+.week-picker.large {
+	z-index: 9999;
+    position: absolute;
+    top:45px;
+	display:none;
+}
+.week-picker.small .ui-datepicker-inline{
+	width: auto;
+}
+.top-bar-section .info a{
+	background-color: #2ba6cb !important;
+}
+.top-bar-section .info:hover > a{
+	background-color: #2795B7 !important;
+}
+.top-bar-section .alert a{
+	background-color: #c60f13 !important;
+
+}
+
+.top-bar-section .alert:hover > a{
+	background-color: #B20E11 !important;
+
+}
+
+.top-bar-section .success a{
+	background-color: #5da423 !important;
+}
+.top-bar-section .success:hover > a{
+	background-color: #549420 !important;
+}
+
+.show-more.top {
+	display:none;
+}
+
+.date-display {
+	width: 200px;
+}
+
+.no-pointer {
+	cursor: default !important;
+}
+
+
+.title-area .date-label{
+	 margin-left: 5em !important;
+	display: inline-block;
+}
