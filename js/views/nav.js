@@ -65,7 +65,7 @@ app.NavView = Backbone.View.extend({
 
         var today = new Date();
         this.$week_pickers.datepicker('setDate', today);
-        if(!app.fetchingData){ 
+        if(app.fetchingData == false){ 
             this.searchDate(today);
         } else {
             (function(that){
