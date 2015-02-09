@@ -3,6 +3,7 @@ app.fetchingData = false;
 app.dataLoadCallback = false;
 app.filterOptions = false;
 app.filters = {};
+app.testing = true;
 
 app.property_map = {
     ows_department: 'department',
@@ -45,33 +46,43 @@ app.processResults = function(results) {
 app.getData = function() {
     app.LibraryCollection = app.LibraryCollection || new app.Library([]);
     app.fetchingData = true;
-    app.spData.getData([{
-        url: app.config_map.url,
-        type: 'list',
-        guid: app.config_map.guid,
-        callback: function(results) {
+    if (!app.testing) {
+        app.spData.getData([{
+            url: app.config_map.url,
+            type: 'list',
+            guid: app.config_map.guid,
+            callback: function(results) {
+                app.fetchingData = false;
+                results = app.processResults(results);
+                //set library to results
+                app.LibraryCollection.set(results);
+                app.LibraryCollection.trigger('change');
+                if (app.dataLoadCallback) {
+                    app.dataLoadCallback();
+                    app.dataLoadCallback = false;
+                }
+            }
+        }], 0, function() {
+            console.log('data retrieved.');
+        });
+    } else {
+        //simulate server fetch
+        setTimeout(function() {
             app.fetchingData = false;
-            results = app.processResults(results);
-            //set library to results
+            results = app.test_data || [];
             app.LibraryCollection.set(results);
             app.LibraryCollection.trigger('change');
             if (app.dataLoadCallback) {
                 app.dataLoadCallback();
                 app.dataLoadCallback = false;
             }
-
-        }
-
-    }], 0, function() {
-        console.log('data retrieved.');
-    });
+        }, 100);
+    }
 }
 
 
 
 
-
-(function() {
     //initialize department dropdown menu from config.js
     var key,
         departments = app.config.departments,
@@ -87,4 +98,3 @@ app.getData = function() {
 
     //fetch data from server
     app.getData();
-})();

@@ -29,6 +29,7 @@ app.NavView = Backbone.View.extend({
                 showOtherMonths: true,
                 selectOtherMonths: true,
                 onSelect: function(dateText, inst) {
+                    that.$week_pickers.find('.ui-datepicker-calendar tr td a').removeClass('ui-state-hover');
                     var date = $(this).datepicker('getDate');
 
                     that.searchDate(date);
@@ -53,8 +54,8 @@ app.NavView = Backbone.View.extend({
 
                 },
                 onChangeMonthYear: function(year, month, inst) {
-
-                    app.selectCurrentWeek();
+                    event.stopPropagation();
+                    that.selectCurrentWeek();
 
                 }
             });

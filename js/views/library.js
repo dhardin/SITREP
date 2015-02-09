@@ -27,19 +27,17 @@ app.LibraryView = Backbone.View.extend({
 	},
 
 	render: function (options) {
-		var isFiltered = false, groupBy = false, collection = false;
-		options = options || app.filterOptions;
-		if(options){
-			isFiltered = (options.isFiltered ? options.isFiltered : false);
-			groupBy = (options.groupBy ? options.groupBy : false);
+		var collection = false, isFiltered = app.filterOptions, groupBy = false;
+		options = options || false;
+		if(!options && isFiltered){
+			this.search(app.filterOptions);
+			return;
+		} else {
 			collection = options.collection;
 		}
 	
-
-		if(!collection){
 			this.$el.html(!groupBy ? this.template() : this.groupTemplate());
 			this.$items = (!groupBy ? this.$el.find('#items') : this.$el.find('.items'));		
-		}
 
 		collection = collection || this.collection;
 		this.$items.html('');

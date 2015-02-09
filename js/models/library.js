@@ -42,7 +42,7 @@ app.Library = Backbone.Collection.extend({
                             //else, return false
                             attributes = model.attributes;
                             for (key in attributes) {
-                                if (attributes[key].toLowerCase().indexOf(val) > -1) {
+                                if (attributes[key].toString().toLowerCase().indexOf(val) > -1) {
                                     return true;
                                 }
                             }
