@@ -44,7 +44,7 @@ app.processResults = function(results) {
 }
 
 app.getData = function() {
-	var i;
+    var i;
     app.LibraryCollection = app.LibraryCollection || new app.Library([]);
     app.fetchingData = true;
     if (!app.testing) {
@@ -59,8 +59,8 @@ app.getData = function() {
                 app.LibraryCollection.set(results);
                 app.LibraryCollection.trigger('change');
                 if (app.dataLoadCallback) {
-                	for(i = 0; i < app.dataLoadCallback.length; i++){
-                    	app.dataLoadCallback[i]();
+                    for (i = 0; i < app.dataLoadCallback.length; i++) {
+                        app.dataLoadCallback[i]();
                     }
                     app.dataLoadCallback = false;
                 }
@@ -76,7 +76,9 @@ app.getData = function() {
             app.LibraryCollection.set(results);
             app.LibraryCollection.trigger('change');
             if (app.dataLoadCallback) {
-                app.dataLoadCallback();
+                for (i = 0; i < app.dataLoadCallback.length; i++) {
+                    app.dataLoadCallback[i]();
+                }
                 app.dataLoadCallback = false;
             }
         }, 100);
@@ -86,7 +88,7 @@ app.getData = function() {
 
 
 
-   
 
-    //fetch data from server
-    app.getData();
+
+//fetch data from server
+app.getData();
