@@ -26,14 +26,14 @@ var Router = Backbone.Router.extend({
 		   	this.AppView.showView(libraryView);
 			app.fetchId = id;
 			app.router = this;
-			app.dataLoadCallback = function(){
+			app.dataLoadCallback.push(function(){
 				var item = (app.fetchId && app.LibraryCollection.get({id: app.fetchId}) ? 
 					app.LibraryCollection.get({id: app.fetchId})
 					: new app.Item());
 				var editItemView = new app.EditItemView({model: item});
 		
  				app.router.AppView.showView(editItemView);
-			};
+			});
 		} else {
 			var item = (id ? 
 					app.LibraryCollection.get({id: id})

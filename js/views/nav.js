@@ -65,7 +65,16 @@ app.NavView = Backbone.View.extend({
 
         var today = new Date();
         this.$week_pickers.datepicker('setDate', today);
-        this.searchDate(today);
+        if(!app.fetchingData){ 
+            this.searchDate(today);
+        } else {
+            (function(that){
+                app.dataLoadCallback.push(function(){
+                that.searchDate(today);
+            });
+            })(this);
+            
+        }
 
         this.$week_pickers.find('.ui-datepicker-calendar tr').on('mouseover', function(e) {
 
@@ -97,15 +106,10 @@ app.NavView = Backbone.View.extend({
 
         this.$end_date.text($.datepicker.formatDate(dateFormat, this.date.end));
 
-        if (!Backbone.pubSub) {
-            (function(that) {
-                setTimeout(function() {
-                    that.searchBetweenDates(formattedStartDate, formattedEndDate);
-                }, 25);
-            })(this);
-        } else {
-            this.searchBetweenDates(formattedStartDate, formattedEndDate);
-        }
+     
+
+        this.searchBetweenDates(formattedStartDate, formattedEndDate);
+        
     },
     searchBetweenDates: function(start, end) {
         app.filters = app.filters || {};

@@ -44,6 +44,7 @@ app.processResults = function(results) {
 }
 
 app.getData = function() {
+	var i;
     app.LibraryCollection = app.LibraryCollection || new app.Library([]);
     app.fetchingData = true;
     if (!app.testing) {
@@ -58,7 +59,9 @@ app.getData = function() {
                 app.LibraryCollection.set(results);
                 app.LibraryCollection.trigger('change');
                 if (app.dataLoadCallback) {
-                    app.dataLoadCallback();
+                	for(i = 0; i < app.dataLoadCallback.length; i++){
+                    	app.dataLoadCallback[i]();
+                    }
                     app.dataLoadCallback = false;
                 }
             }
