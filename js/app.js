@@ -1,8 +1,8 @@
 var app = app || {};
-app.fetchingData = false;
-app.dataLoadCallback = false;
-app.filterOptions = false;
-app.filters = {};
+app.fetchingData = app.fetchingData || false;
+app.dataLoadCallback = app.dataLoadCallback || [];
+app.filterOptions = app.filterOptions || false;
+app.filters = app.filters || {};
 app.testing = true;
 
 app.property_map = {
