@@ -83,18 +83,7 @@ app.getData = function() {
 
 
 
-    //initialize department dropdown menu from config.js
-    var key,
-        departments = app.config.departments,
-        $department_dropdown = $('#department_dropdown'),
-        dropdown_html = '';
-
-    for (key in departments) {
-        dropdown_html += '<option value="' + departments[key] + '">' + key + '</option>';
-    }
-
-    //populate dropdown menu
-    $department_dropdown.html(dropdown_html);
+   
 
     //fetch data from server
     app.getData();

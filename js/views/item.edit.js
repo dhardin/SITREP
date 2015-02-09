@@ -12,10 +12,17 @@ app.EditItemView = Item.extend({
 
     initialize: function() {
         this.model.on('change:status', this.updateStatus, this);
+        this.dropdown_html = '';
+
+         for (var key in app.config.departments) {
+             this.dropdown_html += '<option value="' + app.config.departments[key] + '">' + key + '</option>';
+        }
+
     },
 
     render: function() {
         var department = this.model.get('department');
+
         this.$el.html(this.template((this.model ? this.model.toJSON() : {})));
         this.$statusMsg = this.$('.msg');
         this.$closeBtn = this.$('#closeBtn');
@@ -25,8 +32,13 @@ app.EditItemView = Item.extend({
         this.$form = this.$('form');
         this.$description = this.$('#description');
         this.$description.ckeditor();
+        this.$department_dropdown = this.$('#department_dropdown');
         this.$el.find('select option[value="' + department + '"]').attr('selected', 'selected');
         this.formData = {};
+
+       
+        //populate dropdown menu
+        this.$department_dropdown.html(this.dropdown_html);
         return this;
     },
     updateStatus: function() {
@@ -91,7 +103,9 @@ app.EditItemView = Item.extend({
                     method: (!app.LibraryCollection.get({
                         cid: that.model.cid
                     }) ? 'new' : 'update'),
-                    callback: function(results){that.onSaveComplete(results);},
+                    callback: function(results) {
+                        that.onSaveComplete(results);
+                    },
                     trigger: false,
                     formData: that.formData
                 });
