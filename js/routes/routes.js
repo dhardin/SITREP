@@ -26,6 +26,7 @@ var Router = Backbone.Router.extend({
 		   	this.AppView.showView(libraryView);
 			app.fetchId = id;
 			app.router = this;
+			 app.dataLoadCallback = app.dataLoadCallback || [];
 			app.dataLoadCallback.push(function(){
 				var item = (app.fetchId && app.LibraryCollection.get({id: app.fetchId}) ? 
 					app.LibraryCollection.get({id: app.fetchId})

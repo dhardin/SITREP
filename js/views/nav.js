@@ -69,6 +69,7 @@ app.NavView = Backbone.View.extend({
             this.searchDate(today);
         } else {
             (function(that){
+                app.dataLoadCallback = app.dataLoadCallback || [];
                 app.dataLoadCallback.push(function(){
                 that.searchDate(today);
             });
