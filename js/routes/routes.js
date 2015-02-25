@@ -65,7 +65,7 @@ var Router = Backbone.Router.extend({
         } else if (id) {
 
             item = app.UserCollection.findWhere({
-                loginname: id
+                id: id
             });
             if (!item) {
                 app.router.navigate('edit/', true);
