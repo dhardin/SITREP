@@ -126,7 +126,7 @@ app.EditItemView = Item.extend({
     },
 
     onCloseClick: function(e) {
-        app_router.navigate('', {
+        app.router.navigate('', {
             trigger: true
         });
     },
@@ -145,7 +145,7 @@ app.EditItemView = Item.extend({
                 that.save({
                     method: 'delete',
                     callback: function() {
-                        app_router.navigate('', {
+                        app.router.navigate('', {
                             trigger: true
                         });
                     },

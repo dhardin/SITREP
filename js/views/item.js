@@ -1,5 +1,7 @@
+	var app = app || {};
+
 	var Item = Backbone.View.extend({
-	    saveToSP: function(obj, method, callback) {
+	    saveToSP: function (obj, method, callback) {
 	        app.spData.saveData({
 	            url: app.config_map.url,
 	            guid: app.config_map.guid,
