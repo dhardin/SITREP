@@ -14,8 +14,8 @@ Tool for maintaining a collection of situational reports (SITREP) by date
 - Upload repository to a Document Library in your SharePoint site
 - Create a SharePoint list with the following columns
   - Department
-    -Type: Choice
-    -Choices: Whatever your deparment names are
+    - Type: Choice
+    - Choices: Whatever your deparment names are
   - Description
     - Type: Multiline
   - Date
