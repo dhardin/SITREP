@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="lib/foundation/css/foundation.css" />
     <link rel="stylesheet" type="text/css" href="lib/jquery-ui/jquery-ui.css" />
-        <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
     <script type="text/javascript" src="lib/jquery.js"></script>
     <script type="text/javascript" src="lib/jquery-ui/jquery-ui.js"></script>
     <script type="text/javascript" src="lib/foundation/js/foundation.min.js"></script>
@@ -23,15 +23,15 @@
             <ul class="title-area">
                 <li class="name">
                     <h1>
-                    	<a href="#">
-                    	<span class="show-for-medium-up">Report</span>
-                    	<span class="show-for-small-only">
-                    		Report
-                    		<span class="date-label">
-                    			<span class='startDate'>--/--/----</span> to <span class='endDate'>--/--/----</span>
-                    		</span>
-                		</span>
-                    	</a>
+                        <a href="#">
+                        <span class="show-for-medium-up">Report</span>
+                        <span class="show-for-small-only">
+                            Report
+                            <span class="date-label">
+                                <span class='startDate'>--/--/----</span> to <span class='endDate'>--/--/----</span>
+                            </span>
+                        </span>
+                        </a>
                     </h1>
                 </li>
                 <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a>
@@ -58,7 +58,7 @@
                         <div type="text" class="week-picker large"></div>
                     </li>
                     <!-- SMALL ONLY -->
-                     <li class="success show-for-small-only">
+                    <li class="success show-for-small-only">
                         <a href="#new" class="text-center">Create New Item</a>
                     </li>
                     <li class="info date-container show-for-small-only has-dropdown">
@@ -107,7 +107,7 @@
         <form data-abide>
             <div class="alert-box radius hidden" data-alert><span class="msg"><%=status%><%=statusText%></span>
             </div>
-        
+
             <div class="row">
                 <div class="small-12 medium-6 large-6 columns">
                     <div class="text-field">
@@ -124,7 +124,7 @@
                         </label>
                     </div>
                 </div>
-                 <div class="small-6 medium-3 columns">
+                <div class="small-6 medium-3 columns">
                     <div class="text-field">
                         <label>Last Modified
                             <input type="text" value="<%=modified%>" disabled/>
@@ -157,7 +157,7 @@
         <div class="alert-box radius hidden" data-alert><span class="msg"><%=status%><%=statusText%></span>
         </div>
         <h1 class="item-title"><%=department%></h1>
-         <h6 class="subheader">Created: <%=created%></h6>
+        <h6 class="subheader">Created: <%=created%></h6>
         <h6 class="subheader">Last Modified: <%=modified%></h6>
         <div class="text-right">
             <a class="show-more">Show More</a>
@@ -182,14 +182,19 @@
             <p>Let's try adding some!</p>
         </div>
     </script>
-
-    <script type="text/template" id="fetchingItemsTemplate">
+    <script type="text/template" id="fetchingDataTemplate">
         <div class="text-center library-message">
             <p>Fetching data...</p>
         </div>
     </script>
+    <script type="text/template" id="errorTemplate">
+        <div class="text-center library-message">
+            <h1>Error</h1>
+            <h1 class="subheader">Sorry, but the requested page does not exist :(</h1>
+        </div>
+    </script>
 
-    
+
     <!-- Models -->
     <script src="js/models/item.js"></script>
     <script src="js/models/library.js"></script>
@@ -200,6 +205,9 @@
     <script src="js/views/library.js"></script>
     <script src="js/views/nav.js"></script>
     <script src="js/views/app.js"></script>
+
+    <script src="js/views/fetchingData.js"></script>
+    <script src="js/views/error.js"></script>
     <!-- Application -->
     <script src="js/data.js"></script>
     <script src="js/data.test.js"></script>

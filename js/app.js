@@ -90,5 +90,3 @@ app.getData = function() {
 
 
 
-//fetch data from server
-app.getData();

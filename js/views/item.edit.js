@@ -31,6 +31,7 @@ app.EditItemView = Item.extend({
         this.$alert = this.$('.alert-box');
         this.$form = this.$('form');
         this.$description = this.$('#description');
+        CKEDITOR.config.height = 'auto';
         this.$description.ckeditor();
         this.$department_dropdown = this.$('#department_dropdown');
         this.$el.find('select option[value="' + department + '"]').attr('selected', 'selected');
