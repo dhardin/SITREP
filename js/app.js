@@ -13,6 +13,8 @@ app.processResults = function(results) {
     var temp_results = app.spData.processData(results),
         index = 0, i = 0;
 
+        results = [];
+
     for (i = 0; i < temp_results.length; i++) {
         if (Object.keys(temp_results[i]).length == 0) {
             continue;
