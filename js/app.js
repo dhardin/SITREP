@@ -1,19 +1,19 @@
 var app = app || {};
-app.fetchingData = app.fetchingData || false;
 app.dataLoadCallback = app.dataLoadCallback || [];
 app.filterOptions = app.filterOptions || false;
 app.filters = app.filters || {};
 app.testing = true;
 app.state_map = {
-    fetched: false
+    fetched: false,
+    fetchingData: false
 };
 
 
 app.processResults = function(results) {
-    var temp_results = app.spData.processData(results);
-    results = [], index = 0;
+    var temp_results = app.spData.processData(results),
+        index = 0, i = 0;
 
-    for (var i = 0; i < temp_results.length; i++) {
+    for (i = 0; i < temp_results.length; i++) {
         if (Object.keys(temp_results[i]).length == 0) {
             continue;
         }
@@ -31,7 +31,7 @@ app.processResults = function(results) {
         }
     }
     return results;
-}
+};
 
 app.getData = function() {
     var i;
@@ -43,7 +43,7 @@ app.getData = function() {
             type: 'list',
             guid: app.config_map.guid,
             callback: function(results) {
-                app.fetchingData = false;
+                app.state_map.fetchingData = false;
                 results = app.processResults(results);
                 //set library to results
                 app.LibraryCollection.set(results);
@@ -61,7 +61,7 @@ app.getData = function() {
     } else {
         //simulate server fetch
         setTimeout(function() {
-            app.fetchingData = false;
+            app.state_map.fetchingData = false;
             results = app.test_data || [];
             app.LibraryCollection.set(results);
             app.LibraryCollection.trigger('change');
@@ -73,10 +73,4 @@ app.getData = function() {
             }
         }, 100);
     }
-}
-
-
-
-
-
-
+};
