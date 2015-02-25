@@ -32,7 +32,7 @@ app.ItemView = Item.extend({
 
 	edit: function(e){
 		var id = this.model.get('id');
-		app_router.navigate('edit/' + id, { trigger: true });
+		app.router.navigate('edit/' + id, { trigger: true });
 	},
 
 	delete: function(e) {
@@ -45,7 +45,7 @@ app.ItemView = Item.extend({
 				that.save({
 					method: 'delete',
 					callback: function(){
-						app_router.navigate('' , { trigger: true });
+						app.router.navigate('' , { trigger: true });
 					},
 					trigger: false,
 					formData: { ID: that.model.get('id') }
