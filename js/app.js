@@ -39,9 +39,9 @@ app.getData = function() {
     app.fetchingData = true;
     if (!app.testing) {
         app.spData.getData([{
-            url: app.config_map.url,
+            url: app.config.url,
             type: 'list',
-            guid: app.config_map.guid,
+            guid: app.config.guid,
             callback: function(results) {
                 app.state_map.fetchingData = false;
                 results = app.processResults(results);
