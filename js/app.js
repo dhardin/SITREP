@@ -5,19 +5,6 @@ app.filterOptions = app.filterOptions || false;
 app.filters = app.filters || {};
 app.testing = true;
 
-app.property_map = {
-    ows_department: 'department',
-    ows_description: 'description',
-    ows_id: 'id',
-    ows_modified: 'modified',
-    ows_created: 'created',
-    ows_date: 'date'
-}
-
-app.config_map = {
-    url: '',
-    guid: ''
-}
 
 app.processResults = function(results) {
     var temp_results = app.spData.processData(results);
