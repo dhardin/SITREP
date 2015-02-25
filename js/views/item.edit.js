@@ -34,12 +34,12 @@ app.EditItemView = Item.extend({
         CKEDITOR.config.height = 'auto';
         this.$description.ckeditor();
         this.$department_dropdown = this.$('#department_dropdown');
-        this.$el.find('select option[value="' + department + '"]').attr('selected', 'selected');
         this.formData = {};
 
        
         //populate dropdown menu
         this.$department_dropdown.html(this.dropdown_html);
+        this.$department_dropdown.find('option[value="' + department + '"]').attr('selected', 'selected');
         return this;
     },
     updateStatus: function() {
