@@ -8,7 +8,7 @@ var Router = Backbone.Router.extend({
         'edit/:id': 'editItem',
         'edit/*': 'editItem',
         'search': 'search',
-        'search/*': 'search'
+        'search/*': 'search',
         'fetch': 'fetch',
         '*404': 'error'
     },
