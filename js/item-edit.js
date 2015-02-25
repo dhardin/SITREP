@@ -96,7 +96,7 @@ app.EditItemView = Backbone.View.extend({
 							that.setStatus({status: 'Error', text: ': ' + results.error});
 						}
 						if(trigger){
-								app_router.navigate('edit/' + that.model.cid, { trigger: true });
+								app.router.navigate('edit/' + that.model.cid, { trigger: true });
 							}
 						if(callback){
 							callback();
@@ -107,7 +107,7 @@ app.EditItemView = Backbone.View.extend({
 				this.saveToCollection(formData);
 
 		 		if(trigger){
-					app_router.navigate('edit/' + this.model.cid, { trigger: true });
+					app.router.navigate('edit/' + this.model.cid, { trigger: true });
 				}
 
 				if(callback){
@@ -163,11 +163,11 @@ app.EditItemView = Backbone.View.extend({
 				},
 				trigger: false
 			});
-		})(this)
+		})(this);
 	}, 
 
 	onCancelClick: function(e) {
-		app_router.navigate('' , { trigger: true });
+		app.router.navigate('' , { trigger: true });
 	}
 
 });

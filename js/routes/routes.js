@@ -92,8 +92,10 @@ var Router = Backbone.Router.extend({
 });
 
 
-var app_router = new Router({
+
+app.router = new Router({
     AppView: app.AppView
 });
+
 
 Backbone.history.start();
