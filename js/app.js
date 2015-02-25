@@ -4,6 +4,9 @@ app.dataLoadCallback = app.dataLoadCallback || [];
 app.filterOptions = app.filterOptions || false;
 app.filters = app.filters || {};
 app.testing = true;
+app.state_map = {
+    fetched: false
+};
 
 
 app.processResults = function(results) {
@@ -53,7 +56,7 @@ app.getData = function() {
                 }
             }
         }], 0, function() {
-            console.log('data retrieved.');
+            app.state_map.fetched = true;
         });
     } else {
         //simulate server fetch

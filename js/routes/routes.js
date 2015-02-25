@@ -18,6 +18,18 @@ var Router = Backbone.Router.extend({
     },
 
     main: function() {
+    	 if (!app.state_map.fetched) {
+            //fetch data from server
+            app.getData();
+        }
+          if (app.state_map.fetchingData) {
+            app.router.navigate('fetch', true);
+              app.state_map.dataLoadCallback = function() {
+                    app.router.navigate('', true);
+            };
+            return;
+        }
+
         var libraryView = new app.LibraryView();
         this.AppView.showView(libraryView);
     },
