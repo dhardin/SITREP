@@ -64,7 +64,7 @@ var Router = Backbone.Router.extend({
             return;
         } else if (id) {
 
-            item = app.UserCollection.findWhere({
+            item = app.LibraryCollection.findWhere({
                 id: id
             });
             if (!item) {
