@@ -99,12 +99,12 @@ app.NavView = Backbone.View.extend({
             dateFormat = $.datepicker._defaults.dateFormat,
             formattedStartDate, formattedEndDate;
 
-        formattedStartDate = parseInt(year.toString() + this.pad(month + 1, 2) + this.pad(dayStart, 2));
-        formattedEndDate = parseInt(year.toString() + this.pad(month + 1, 2) + this.pad(dayEnd, 2));
-
         if (dayStart < 1) {
             dayStart = getLastDayOfPrevMonth().getDate() + dayStart;
         }
+        
+        formattedStartDate = parseInt(year.toString() + this.pad(month + 1, 2) + this.pad(dayStart, 2));
+        formattedEndDate = parseInt(year.toString() + this.pad(month + 1, 2) + this.pad(dayEnd, 2));
 
         this.date.start = new Date(year, month, dayStart);
         this.date.end = new Date(year, month, dayEnd);
