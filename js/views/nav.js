@@ -54,7 +54,7 @@ app.NavView = Backbone.View.extend({
 
                 },
                 onChangeMonthYear: function(year, month, inst) {
-                    event.stopPropagation();
+                  //  event.stopPropagation();
                     that.selectCurrentWeek();
 
                 }
@@ -102,7 +102,7 @@ app.NavView = Backbone.View.extend({
         if (dayStart < 1) {
             dayStart = getLastDayOfPrevMonth().getDate() + dayStart;
         }
-        
+
         formattedStartDate = parseInt(year.toString() + this.pad(month + 1, 2) + this.pad(dayStart, 2));
         formattedEndDate = parseInt(year.toString() + this.pad(month + 1, 2) + this.pad(dayEnd, 2));
 
