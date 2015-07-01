@@ -65,16 +65,16 @@ app.NavView = Backbone.View.extend({
 
         var today = new Date();
         this.$week_pickers.datepicker('setDate', today);
-        if(app.fetchingData == false){ 
+        if (app.fetchingData == false) {
             this.searchDate(today);
         } else {
-            (function(that){
+            (function(that) {
                 app.dataLoadCallback = app.dataLoadCallback || [];
-                app.dataLoadCallback.push(function(){
-                that.searchDate(today);
-            });
+                app.dataLoadCallback.push(function() {
+                    that.searchDate(today);
+                });
             })(this);
-            
+
         }
 
         this.$week_pickers.find('.ui-datepicker-calendar tr').on('mouseover', function(e) {
@@ -97,8 +97,14 @@ app.NavView = Backbone.View.extend({
             dayStart = date.getDate() - date.getDay(),
             dayEnd = date.getDate() - date.getDay() + 6,
             dateFormat = $.datepicker._defaults.dateFormat,
-            formattedStartDate = parseInt(year.toString() + this.pad(month + 1, 2) + this.pad(dayStart, 2)),
-            formattedEndDate = parseInt(year.toString() + this.pad(month + 1, 2) + this.pad(dayEnd, 2));
+            formattedStartDate, formattedEndDate;
+
+        formattedStartDate = parseInt(year.toString() + this.pad(month + 1, 2) + this.pad(dayStart, 2));
+        formattedEndDate = parseInt(year.toString() + this.pad(month + 1, 2) + this.pad(dayEnd, 2));
+
+        if (dayStart < 1) {
+            dayStart = getLastDayOfPrevMonth().getDate() + dayStart;
+        }
 
         this.date.start = new Date(year, month, dayStart);
         this.date.end = new Date(year, month, dayEnd);
@@ -107,25 +113,33 @@ app.NavView = Backbone.View.extend({
 
         this.$end_date.text($.datepicker.formatDate(dateFormat, this.date.end));
 
-     
+
 
         this.searchBetweenDates(formattedStartDate, formattedEndDate);
-        
+
+        function getLastDayOfPrevMonth() {
+            var d = new Date(); // current date
+            d.setDate(1); // going to 1st of the month
+            d.setHours(-1); // going to last hour before this date even started.
+            return d;
+        }
+
     },
+
     searchBetweenDates: function(start, end) {
         app.filters = app.filters || {};
         app.filters.between = {
             start: start,
-                end: end,
-                attribute: 'created',
-                formatAttrFunc: function(modified_date) {
-                    //format date to yyyy-mm-dd
-                    modified_date = modified_date.substring(0, 10);
-                    //format date to yyyymmdd
-                    modified_date = modified_date.replace(/-/g, '');
+            end: end,
+            attribute: 'created',
+            formatAttrFunc: function(modified_date) {
+                //format date to yyyy-mm-dd
+                modified_date = modified_date.substring(0, 10);
+                //format date to yyyymmdd
+                modified_date = modified_date.replace(/-/g, '');
 
-                    return parseInt(modified_date);
-                }
+                return parseInt(modified_date);
+            }
         };
 
         Backbone.pubSub.trigger('search', app.filters);
@@ -141,11 +155,11 @@ app.NavView = Backbone.View.extend({
 
     onSearch: function(e) {
         app.filters = app.filters || {};
-        app.filters.text= {
-                val: this.$search.val()
-            };
+        app.filters.text = {
+            val: this.$search.val()
+        };
 
-        Backbone.pubSub.trigger('search',app.filters);
+        Backbone.pubSub.trigger('search', app.filters);
     },
     onSelectDateClick: function(e) {
         if ($(e.currentTarget).hasClass('large')) {
