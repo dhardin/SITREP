@@ -89,6 +89,9 @@ app.NavView = Backbone.View.extend({
             $(this).find('td a').removeClass('ui-state-hover');
             e.stopPropagation();
         });
+        this.$week_pickers.find('.ui-datepicker-prev, .ui-datepicker-next').on('click', function(e){
+            e.stopPropagation();
+        });
     },
 
     searchDate: function(date) {
