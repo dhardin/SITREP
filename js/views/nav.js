@@ -54,8 +54,8 @@ app.NavView = Backbone.View.extend({
 
                 },
                 onChangeMonthYear: function(year, month, inst) {
-                  //  event.stopPropagation();
-                    that.selectCurrentWeek();
+                    //  event.stopPropagation();
+                    //   that.selectCurrentWeek();
 
                 }
             });
@@ -89,43 +89,24 @@ app.NavView = Backbone.View.extend({
             $(this).find('td a').removeClass('ui-state-hover');
             e.stopPropagation();
         });
-        this.$week_pickers.find('.ui-datepicker-prev, .ui-datepicker-next').on('click', function(e){
-            e.stopPropagation();
-        });
     },
 
     searchDate: function(date) {
-        var year = date.getFullYear(),
-            month = date.getMonth(),
-            dayStart = date.getDate() - date.getDay(),
-            dayEnd = date.getDate() - date.getDay() + 6,
-            dateFormat = $.datepicker._defaults.dateFormat,
-            formattedStartDate, formattedEndDate;
+        var startOfWeek, endOfWeek,
+           dateFormat = $.datepicker._defaults.dateFormat;
 
-        if (dayStart < 1) {
-            dayStart = getLastDayOfPrevMonth().getDate() + dayStart;
-        }
 
-        formattedStartDate = parseInt(year.toString() + this.pad(month + 1, 2) + this.pad(dayStart, 2));
-        formattedEndDate = parseInt(year.toString() + this.pad(month + 1, 2) + this.pad(dayEnd, 2));
+        startOfWeek = moment(date).startOf('week');
+        endOfWeek = moment(date).endOf('week');
 
-        this.date.start = new Date(year, month, dayStart);
-        this.date.end = new Date(year, month, dayEnd);
 
-        this.$start_date.text($.datepicker.formatDate(dateFormat, this.date.start));
+        this.$start_date.text($.datepicker.formatDate(dateFormat, startOfWeek.toDate()));
 
-        this.$end_date.text($.datepicker.formatDate(dateFormat, this.date.end));
+        this.$end_date.text($.datepicker.formatDate(dateFormat, endOfWeek.toDate()));
 
 
 
-        this.searchBetweenDates(formattedStartDate, formattedEndDate);
-
-        function getLastDayOfPrevMonth() {
-            var d = new Date(); // current date
-            d.setDate(1); // going to 1st of the month
-            d.setHours(-1); // going to last hour before this date even started.
-            return d;
-        }
+        this.searchBetweenDates(startOfWeek.format('YYYYMMDD'), endOfWeek.format('YYYYMMDD'));
 
     },
 
@@ -170,6 +151,17 @@ app.NavView = Backbone.View.extend({
             e.stopPropagation();
             (function(that) {
                 $('body').on('click', function(e) {
+                    var isValidEl = true,
+                        target = e.target;
+                    $('.ui-datepicker-prev, .ui-datepicker-prev *, .ui-datepicker-next, .ui-datepicker-next *').each(function() {
+                        if ($(this)[0] == target) {
+                            isValidEl = false;
+                            e.stopPropagation();
+                        }
+                    });
+                    if (!isValidEl) {
+                        return;
+                    }
                     if (that.$week_picker_large.is(':visible')) {
                         that.$week_picker_large.hide();
                     }

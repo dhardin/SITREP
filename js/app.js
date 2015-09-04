@@ -10,7 +10,7 @@ app.state_map = {
 
 
 app.processResults = function(results) {
-    var temp_results = app.spData.processData(results),
+    var temp_results = app.data.processData(results),
         index = 0, i = 0;
 
         results = [];
@@ -50,8 +50,8 @@ app.getData = function() {
                 //set library to results
                 app.LibraryCollection.set(results);
                 app.LibraryCollection.trigger('change');
-                if (app.dataLoadCallback) {
-                    for (i = 0; i < app.dataLoadCallback.length; i++) {
+                if (app.state_map.dataLoadCallback) {
+                    for (i = 0; i < app.state_map.dataLoadCallback.length; i++) {
                         app.dataLoadCallback[i]();
                     }
                     app.dataLoadCallback = false;
