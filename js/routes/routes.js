@@ -18,14 +18,14 @@ var Router = Backbone.Router.extend({
     },
 
     main: function() {
-    	 if (!app.state_map.fetched) {
+        if (!app.state_map.fetched) {
             //fetch data from server
             app.getData();
         }
-          if (app.state_map.fetchingData) {
+        if (app.state_map.fetchingData) {
             app.router.navigate('fetch', true);
-              app.state_map.dataLoadCallback = function() {
-                    app.router.navigate('', true);
+            app.state_map.dataLoadCallback = function() {
+                app.router.navigate('', true);
             };
             return;
         }
@@ -38,8 +38,12 @@ var Router = Backbone.Router.extend({
         app.router.AppView.showView(errorView);
     },
     fetch: function() {
-        var fetchingDataView = new app.FetchingDataView();
-
+        var fetchingDataView;
+        if (!app.state_map.fetchingData) {
+            app.router.navigate('', true);
+            return;
+        }
+        fetchingDataView = new app.FetchingDataView();
         this.AppView.showView(fetchingDataView);
     },
     editItem: function(id) {
@@ -80,13 +84,25 @@ var Router = Backbone.Router.extend({
 
         this.AppView.showView(editItemView);
     },
-    search: function(val) {
+    search: function(queries) {
+        app.filters = app.filters || {},
+        searchQueries, query, key, val;
 
-        var libraryView = new app.LibraryView({
-            searchText: val
-        });
+        queries = queries.split('&');
+
+        for(i = 0; i < queries.length; i++){
+            query = queries[i].split(',');
+            key = query[0].split('=')[0];
+
+        }
+        app.filters.text = {
+            val: this.$search.val()
+        };
+        var libraryView = new app.LibraryView();
 
         this.AppView.showView(editItemView);
+
+        Backbone.pubSub.trigger('search', app)
     }
 
 });

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" class="no-js">
 
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
@@ -8,14 +8,15 @@
     <link rel="stylesheet" type="text/css" href="lib/jquery-ui/jquery-ui.css" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <script type="text/javascript" src="lib/jquery.js"></script>
+    <script type="text/javascript" src="lib/js-webshim/dev/polyfiller.js"></script>
     <script type="text/javascript" src="lib/jquery-ui/jquery-ui.js"></script>
     <script type="text/javascript" src="lib/foundation/js/foundation.min.js"></script>
-    <script type="text/javascript" src="lib/foundation/js/vendor/modernizr.js"></script>
     <script type="text/javascript" src="lib/underscore.js"></script>
     <script type="text/javascript" src="lib/backbone.js"></script>
     <script type="text/javascript" src="lib/ckeditor/ckeditor.js"></script>
     <script type="text/javascript" src="lib/ckeditor/adapters/jquery.js"></script>
-       <script type="text/javascript" src="lib/moment.js"></script>
+    <script type="text/javascript" src="lib/moment.js"></script>
+    <script type="text/javascript" src="lib/modernizr.js"></script>
 </head>
 
 <body>
@@ -45,19 +46,21 @@
                     </li>
                 </ul>
                 <ul class="right">
-                    <!-- MEDIUM AND UP -->
-                    <li class="date-display has-dropdown show-for-medium-up">
-                        <a class="text-center"><span class='startDate'>--/--/----</span> to <span class='endDate'>--/--/----</span></a>
-                        <ul class="dropdown">
-                            <li class="date-container info">
-                                <a class="selectDate large text-center">Select Date</a>
-                            </li>
-                            <li class="alert">
-                                <a class="clearDate text-center">Clear Date</a>
-                            </li>
+                    <li class="has-dropdown">
+                        <a>Departments</a>
+                        <ul class="dropdown departments">
+                            <li><a data-value="" class="department" href="#">All</a></li>
                         </ul>
-                        <div type="text" class="week-picker large"></div>
                     </li>
+                    <!-- MEDIUM AND UP -->
+                    <li class="date-display show-for-medium-up">
+                        <input class="start calendar" type="date" />
+                    </li>
+                    <li class="has-form  show-for-medium-up">
+                        <a class="no-pointer">To</a>
+                    </li>
+                    <li class="date-display show-for-medium-up">
+                        <input class="end calendar" type="date" /> </li>
                     <!-- SMALL ONLY -->
                     <li class="success show-for-small-only">
                         <a href="#new" class="text-center">Create New Item</a>
@@ -66,14 +69,13 @@
                         <a class="selectDate text-center">Select Date</a>
                         <ul class="dropdown">
                             <li>
-                                <div type="text" class="week-picker small"></div>
+                                <div class="small">
+                                    <input class="calendar start" type="date" />
+                                    <h5 class="white">To<h5>
+    <input class="calendar end" type="date"/></div>
                             </li>
                         </ul>
                     </li>
-                    <li class="alert show-for-small-only">
-                        <a class="clearDate text-center">Clear Date</a>
-                    </li>
-
                     </li>
                     <!-- MEDIUM AND UP -->
                     <li class="divider show-for-medium-up"></li>
@@ -207,7 +209,7 @@
     <script src="js/views/nav.js"></script>
     <script src="js/views/app.js"></script>
 
-    <script src="js/views/fetchingData.js"></script>
+    <script src="js/views/fetch.js"></script>
     <script src="js/views/error.js"></script>
     <!-- Application -->
     <script src="js/data.js"></script>
@@ -219,6 +221,11 @@
     <script src="js/routes/routes.js"></script>
 
     <script type="text/javascript">
+    if(!Modernizr.inputtypes.date){
+     webshim.setOptions('forms-ext', {replaceUI: 'auto'});
+
+     webshim.polyfill('forms forms-ext');
+    }
     $(document).foundation();
     </script>
 

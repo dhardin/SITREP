@@ -5,109 +5,94 @@ app.NavView = Backbone.View.extend({
 
     events: {
         'keyup #search': 'onSearch',
-        'click .selectDate': 'onSelectDateClick',
-        'click .clearDate': 'onClearClick',
-        'click .date-label': 'onDateLabelClick'
+        'input .start': 'onStartDateChange',
+        'input .end': 'onEndDateChange',
+        'click .department': 'onDepartmentChange'
     },
 
     initialize: function() {
-        //_.bindAll(this, 'onSearch');
         this.$search = this.$('#search');
-        this.$week_picker_large = this.$('.week-picker.large');
-        this.$week_picker_small = this.$('.week-picker.small');
-        this.$week_pickers = this.$('.week-picker');
+        this.$calendar_large = this.$('.calendar.large');
+        this.$calendar_small = this.$('.calendar.small');
+        this.$calendars = this.$('.calendar');
         this.$start_date = this.$('.startDate');
         this.$end_date = this.$('.endDate');
         this.$toggle_bar = this.$('.toggle-topbar');
+        this.$start = this.$('.start');
+        this.$end = this.$('.end');
         this.date = {
             start: '',
             end: ''
         };
 
         (function(that) {
-            that.$week_pickers.datepicker({
-                showOtherMonths: true,
-                selectOtherMonths: true,
-                onSelect: function(dateText, inst) {
-                    that.$week_pickers.find('.ui-datepicker-calendar tr td a').removeClass('ui-state-hover');
-                    var date = $(this).datepicker('getDate');
-
-                    that.searchDate(date);
-                    that.selectCurrentWeek();
-
-                    if (!that.$toggle_bar.is(":visible")) {
-
-                        that.$week_picker_large.hide();
-
-                    }
-
-                },
-                beforeShowDay: function(date) {
-
-                    var cssClass = '';
-
-                    if (date >= that.date.start && date <= that.date.end) {
-                        cssClass = 'ui-datepicker-current-day';
-                    }
-
-                    return [true, cssClass];
-
-                },
-                onChangeMonthYear: function(year, month, inst) {
-                    //  event.stopPropagation();
-                    //   that.selectCurrentWeek();
-
+            that.$calendars.on('input', function(e) {
+                //set set calendars equivalent to same value
+                if (e.currentTarget.className.indexOf('start') > -1) {
+                    that.onStartDateChange(e);
+                } else {
+                    that.onEndDateChange(e);
                 }
+                that.searchBetweenDates(that.$start[0].value, that.$end[0].value);
+                e.stopPropagation();
             });
-
-
         })(this);
 
-        var today = new Date();
-        this.$week_pickers.datepicker('setDate', today);
         if (app.fetchingData == false) {
-            this.searchDate(today);
+            // this.searchDate(today);
         } else {
             (function(that) {
                 app.dataLoadCallback = app.dataLoadCallback || [];
                 app.dataLoadCallback.push(function() {
-                    that.searchDate(today);
+                    // that.searchDate(today);
                 });
             })(this);
 
         }
-
-        this.$week_pickers.find('.ui-datepicker-calendar tr').on('mouseover', function(e) {
-
-            $(this).find('td a').addClass('ui-state-hover');
-            e.stopPropagation();
-
-        });
-
-        this.$week_pickers.find('.ui-datepicker-calendar tr').on('mouseleave', function(e) {
-
-            $(this).find('td a').removeClass('ui-state-hover');
-            e.stopPropagation();
+    },
+    onStartDateChange: function(e) {
+        this.$end.attr('min', e.currentTarget.value);
+        this.$start.each(function(index) {
+            this.value = e.currentTarget.value;
         });
     },
 
-    searchDate: function(date) {
-        var startOfWeek, endOfWeek,
-           dateFormat = $.datepicker._defaults.dateFormat;
+    onEndDateChange: function(e) {
+        this.$start.attr('max', e.currentTarget.value);
+        this.$end.each(function(index) {
+            this.value = e.currentTarget.value;
+        });
+    },
 
+    onDepartmentChange: function(e) {
+        var i,
+            val = $(e.currentTarget).attr('data-value'),
+            attribute = 'department';
 
-        startOfWeek = moment(date).startOf('week');
-        endOfWeek = moment(date).endOf('week');
+        app.filters = app.filters || {};
+        app.filters.text = app.filters.text || [];
+        for (i = 0; i < app.filters.text.length; i++) {
+            if (app.filters.text[i].attribute == attribute) {
+                if (val.length == 0) {
+                    app.filters.text.splice(i, 1);
+                } else {
+                    app.filters.text[i].val = val;
+                }
+                Backbone.pubSub.trigger('search', app.filters);
+                return;
+            }
+        }
 
+        if (val.length == 0) {
+            Backbone.pubSub.trigger('search', app.filters);
+            return;
+        }
+        app.filters.text.push({
+            val: val,
+            attribute: attribute
+        });
 
-        this.$start_date.text($.datepicker.formatDate(dateFormat, startOfWeek.toDate()));
-
-        this.$end_date.text($.datepicker.formatDate(dateFormat, endOfWeek.toDate()));
-
-
-
-        this.searchBetweenDates(startOfWeek.format('YYYYMMDD'), endOfWeek.format('YYYYMMDD'));
-
+        Backbone.pubSub.trigger('search', app.filters);
     },
 
     searchBetweenDates: function(start, end) {
@@ -137,71 +122,37 @@ app.NavView = Backbone.View.extend({
         return s;
     },
 
+
+    onClose: function() {
+        _.each(this.childViews, function(childView) {
+            childView.remove();
+            childView.unbind();
+            if (childView.onClose) {
+                childView.onClose();
+            }
+        });
+
+        this.$calendars.off('input');
+    },
+
     onSearch: function(e) {
+        var i = 0,
+            val = this.$search.val();
         app.filters = app.filters || {};
-        app.filters.text = {
-            val: this.$search.val()
-        };
+        app.filters.text = app.filters.text || [];
 
-        Backbone.pubSub.trigger('search', app.filters);
-    },
-    onSelectDateClick: function(e) {
-        if ($(e.currentTarget).hasClass('large')) {
-            this.$week_picker_large.show();
-            e.stopPropagation();
-            (function(that) {
-                $('body').on('click', function(e) {
-                    var isValidEl = true,
-                        target = e.target;
-                    $('.ui-datepicker-prev, .ui-datepicker-prev *, .ui-datepicker-next, .ui-datepicker-next *').each(function() {
-                        if ($(this)[0] == target) {
-                            isValidEl = false;
-                            e.stopPropagation();
-                        }
-                    });
-                    if (!isValidEl) {
-                        return;
-                    }
-                    if (that.$week_picker_large.is(':visible')) {
-                        that.$week_picker_large.hide();
-                    }
-                    $('body').off();
-                });
-            })(this);
+        for (i = 0; i < app.filters.text.length; i++) {
+            if (!app.filters.text[i].attribute) {
+                app.filters.text[i].val = val;
+                Backbone.pubSub.trigger('search', app.filters);
+                return;
+            }
         }
-    },
-    onClearClick: function(e) {
-        this.$start_date.text('--/--/----');
-        this.$end_date.text('--/--/----');
-        app.filters.between = false;
+
+        app.filters.text.push({
+            val: val
+        });
 
         Backbone.pubSub.trigger('search', app.filters);
-        this.selectNone();
-
-    },
-    onDateLabelClick: function(e) {
-        this.$toggle_bar.click();
-    },
-    selectCurrentWeek: function() {
-
-        (function(that) {
-            setTimeout(function() {
-
-                that.$week_pickers.find('.ui-datepicker-current-day a').addClass('ui-state-active');
-
-            }, 1);
-
-        })(this);
-    },
-    selectNone: function() {
-        (function(that) {
-            setTimeout(function() {
-
-                that.$week_pickers.find('.ui-datepicker-current-day a').removeClass('ui-state-active');
-
-            }, 1);
-
-        })(this);
     }
-
 });

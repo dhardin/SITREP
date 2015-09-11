@@ -52,13 +52,7 @@
 
 #tools-menu {position: relative;}
 
-.week-picker.large {
-	z-index: 9999;
-    position: absolute;
-    top:45px;
-	display:none;
-}
-.week-picker.small .ui-datepicker-inline{
+.calendar.small .ui-datepicker-inline{
 	width: auto;
 }
 .top-bar-section .info a{
@@ -89,15 +83,43 @@
 }
 
 .date-display {
-	width: 200px;
+
 }
 
 .no-pointer {
 	cursor: default !important;
+	padding: 12px !important;
 }
 
 
 .title-area .date-label{
 	 margin-left: 5em !important;
 	display: inline-block;
+}
+
+input.start, input.end {
+	display: inline;
+	width: 150px;
+}
+
+.small input.start, .small input.end {
+	display: block;
+	width: 100%;
+}
+
+.white {
+	color: white;
+}
+
+.small {
+	text-align: center;
+}
+
+.show-for-medium-up .step-controls {
+	margin-top: 15px;
+}
+.input-buttons  {
+	display: inline-block;
+	float: right;
+	overflow: visible;
 }
