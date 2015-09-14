@@ -10,9 +10,6 @@
 	list-style-type: none !important;
 	margin: 0;
 }
-#search {
-	height: 100%;
-}
 .list-item {
 	background-color: #F5F5F5;
 	padding: 10px;
@@ -82,24 +79,18 @@
 	display:none;
 }
 
-.date-display {
-
-}
-
 .no-pointer {
 	cursor: default !important;
-	padding: 12px !important;
+	
 }
 
+.pad {
+	padding: 12px !important;
+}
 
 .title-area .date-label{
 	 margin-left: 5em !important;
 	display: inline-block;
-}
-
-input.start, input.end {
-	display: inline;
-	width: 150px;
 }
 
 .small input.start, .small input.end {

@@ -29,9 +29,6 @@
                         <span class="show-for-medium-up">Report</span>
                         <span class="show-for-small-only">
                             Report
-                            <span class="date-label">
-                                <span class='startDate'>--/--/----</span> to <span class='endDate'>--/--/----</span>
-                            </span>
                         </span>
                         </a>
                     </h1>
@@ -46,8 +43,11 @@
                     </li>
                 </ul>
                 <ul class="right">
+                     <li class="has-form  show-for-medium-up">
+                        <a class="no-pointer">Departments</a>
+                    </li>
                     <li class="has-dropdown">
-                        <a>Departments</a>
+                        <a class="selectedDepartment">All</a>
                         <ul class="dropdown departments">
                             <li><a data-value="" class="department" href="#">All</a></li>
                         </ul>
@@ -57,7 +57,7 @@
                         <input class="start calendar" type="date" />
                     </li>
                     <li class="has-form  show-for-medium-up">
-                        <a class="no-pointer">To</a>
+                        <a class="no-pointer pad">To</a>
                     </li>
                     <li class="date-display show-for-medium-up">
                         <input class="end calendar" type="date" /> </li>
@@ -80,16 +80,12 @@
                     <!-- MEDIUM AND UP -->
                     <li class="divider show-for-medium-up"></li>
 
-                    <li class="has-form  show-for-medium-up">
+                    <li class="has-form show-for-medium-up">
                         <a class="no-pointer">Search</a>
                     </li>
                     <!-- SMALL AND UP -->
                     <li class="has-form">
-                        <div class="row collapse">
-                            <div class="small-12 columns">
-                                <input id="search" type="text" placeholder="Type to find stuff">
-                            </div>
-                        </div>
+                        <input id="search" type="text" placeholder="Type to find stuff">
                     </li>
                 </ul>
             </section>
@@ -227,6 +223,7 @@
      webshim.polyfill('forms forms-ext');
     }
     $(document).foundation();
+
     </script>
 
 </body>

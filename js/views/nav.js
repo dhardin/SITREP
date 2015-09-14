@@ -20,6 +20,7 @@ app.NavView = Backbone.View.extend({
         this.$toggle_bar = this.$('.toggle-topbar');
         this.$start = this.$('.start');
         this.$end = this.$('.end');
+        this.$selectedDepartment = this.$('.selectedDepartment');
         this.date = {
             start: '',
             end: ''
@@ -68,6 +69,8 @@ app.NavView = Backbone.View.extend({
         var i,
             val = $(e.currentTarget).attr('data-value'),
             attribute = 'department';
+
+        this.$selectedDepartment.text(val);
 
         app.filters = app.filters || {};
         app.filters.text = app.filters.text || [];
