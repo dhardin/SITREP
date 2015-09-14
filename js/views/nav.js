@@ -70,7 +70,7 @@ app.NavView = Backbone.View.extend({
             val = $(e.currentTarget).attr('data-value'),
             attribute = 'department';
 
-        this.$selectedDepartment.text(val);
+        this.$selectedDepartment.text(val.length > 0 ? val : 'All');
 
         app.filters = app.filters || {};
         app.filters.text = app.filters.text || [];
