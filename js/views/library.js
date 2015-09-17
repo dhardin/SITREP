@@ -9,8 +9,13 @@ app.LibraryView = Backbone.View.extend({
     },
 
     initialize: function() {
+   
         this.collection = app.LibraryCollection;
         this.childViews = [];
+
+         this.collection.on('add reset remove', function() {
+              this.render(this.collection);
+       }, this);
 
         Backbone.pubSub.on('search', this.search, this);
     },

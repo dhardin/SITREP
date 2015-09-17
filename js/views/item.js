@@ -1,10 +1,10 @@
 	var app = app || {};
 
 	var Item = Backbone.View.extend({
-	    saveToSP: function (obj, method, callback) {
+	    saveToSP: function(obj, method, callback) {
 	        app.spData.saveData({
-	            url: app.config_map.url,
-	            guid: app.config_map.guid,
+	            url: app.config.url,
+	            guid: app.config.guid,
 	            data: [obj],
 	            method: method,
 	            callback: callback
@@ -40,6 +40,11 @@
 	                                break;
 	                            case 'delete':
 	                                // Delete model
+	                                that.setStatus({
+	                                    status: 'Deleting',
+	                                    text: ''
+	                                });
+
 	                                var collection = that.model.collection;
 	                                collection.remove(that.model);
 	                                collection.trigger('change');
@@ -80,7 +85,7 @@
 
 	        this.model.set('status', status);
 	        this.model.set('statusText', text);
-	        
+
 	        if (!$alert) {
 	            return;
 	        }

@@ -2,7 +2,7 @@ var app = app || {};
 app.dataLoadCallback = app.dataLoadCallback || [];
 app.filterOptions = app.filterOptions || false;
 app.filters = app.filters || {};
-app.testing = true;
+app.testing = false;
 app.state_map = {
     fetched: false,
     fetchingData: false
@@ -51,7 +51,7 @@ app.getData = function() {
                 results = app.processResults(results);
                 var departments = _.unique(_.pluck(results, 'department'));
 
-                $('.departments').append(departments.reduce(function(previous, current, index, array) {
+                $('.departments').html('<li><a data-value="" class="department" href="#">All</a></li>').append(departments.reduce(function(previous, current, index, array) {
                     return (index == 1 ? '<li><a data-value="' + previous + '" class="department">' + previous + '</a></li>' : previous) + '<li><a class="department" data-value="' + current + '">' + current + '</a></li>';
                 }));
                 //set library to results
@@ -74,7 +74,7 @@ app.getData = function() {
             app.LibraryCollection.set(results);
             var departments = _.unique(_.pluck(results, 'department'));
 
-            $('.departments').append(departments.reduce(function(previous, current, index, array) {
+            $('.departments').html('<li><a data-value="" class="department" href="#">All</a></li>').append(departments.reduce(function(previous, current, index, array) {
                 return (index == 1 ? '<li><a data-value="' + previous + '" class="department">' + previous + '</a></li>' : previous) + '<li><a data-value="' + current + '" class="department">' + current + '</a></li>';
             }));
             app.LibraryCollection.trigger('change');

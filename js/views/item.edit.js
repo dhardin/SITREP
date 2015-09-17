@@ -36,7 +36,6 @@ app.EditItemView = Item.extend({
         this.$department_dropdown = this.$('#department_dropdown');
         this.formData = {};
 
-       
         //populate dropdown menu
         this.$department_dropdown.html(this.dropdown_html);
         this.$department_dropdown.find('option[value="' + department + '"]').attr('selected', 'selected');
@@ -129,6 +128,7 @@ app.EditItemView = Item.extend({
         app.router.navigate('', {
             trigger: true
         });
+        Backbone.pubSub.trigger('search', app.filters);
     },
 
     onDeleteClick: function(e) {
@@ -148,6 +148,7 @@ app.EditItemView = Item.extend({
                         app.router.navigate('', {
                             trigger: true
                         });
+                         Backbone.pubSub.trigger('search', app.filters);
                     },
                     trigger: false,
                     formData: {
@@ -157,5 +158,4 @@ app.EditItemView = Item.extend({
             }, 10);
         })(this);
     }
-
 });

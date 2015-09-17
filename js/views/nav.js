@@ -37,6 +37,7 @@ app.NavView = Backbone.View.extend({
                 that.searchBetweenDates(that.$start[0].value, that.$end[0].value);
                 e.stopPropagation();
             });
+
         })(this);
 
         if (app.fetchingData == false) {
