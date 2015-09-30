@@ -49,11 +49,16 @@ app.getData = function() {
                 app.state_map.fetchingData = false;
                 app.state_map.fetched = true;
                 results = app.processResults(results);
-                var departments = _.unique(_.pluck(results, 'department'));
+                var departments = [], key;
 
-                $('.departments').html('<li><a data-value="" class="department" href="#">All</a></li>').append(departments.reduce(function(previous, current, index, array) {
-                    return (index == 1 ? '<li><a data-value="' + previous + '" class="department">' + previous + '</a></li>' : previous) + '<li><a class="department" data-value="' + current + '">' + current + '</a></li>';
-                }));
+                for(key in app.config.departments){
+                    departments.push(key);
+                }
+                if (departments.length > 0) {
+                    $('.departments').html('<li><a data-value="" class="department" href="#">All</a></li>').append(departments.reduce(function(previous, current, index, array) {
+                        return (index == 1 ? '<li><a data-value="' + previous + '" class="department">' + previous + '</a></li>' : previous) + '<li><a class="department" data-value="' + current + '">' + current + '</a></li>';
+                    }));
+                }
                 //set library to results
                 app.LibraryCollection.set(results);
                 app.LibraryCollection.trigger('change');
@@ -72,11 +77,16 @@ app.getData = function() {
             app.state_map.fetched = true;
             results = app.test_data || [];
             app.LibraryCollection.set(results);
-            var departments = _.unique(_.pluck(results, 'department'));
+          var departments = [], key;
 
-            $('.departments').html('<li><a data-value="" class="department" href="#">All</a></li>').append(departments.reduce(function(previous, current, index, array) {
-                return (index == 1 ? '<li><a data-value="' + previous + '" class="department">' + previous + '</a></li>' : previous) + '<li><a data-value="' + current + '" class="department">' + current + '</a></li>';
-            }));
+                for(key in app.config.departments){
+                    departments.push(key);
+                }
+                if (departments.length > 0) {
+                    $('.departments').html('<li><a data-value="" class="department" href="#">All</a></li>').append(departments.reduce(function(previous, current, index, array) {
+                        return (index == 1 ? '<li><a data-value="' + previous + '" class="department">' + previous + '</a></li>' : previous) + '<li><a class="department" data-value="' + current + '">' + current + '</a></li>';
+                    }));
+                }
             app.LibraryCollection.trigger('change');
             if (app.state_map.dataLoadCallback) {
                 app.state_map.dataLoadCallback();
