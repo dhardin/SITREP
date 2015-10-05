@@ -5,7 +5,10 @@ app.config = {
         'N/A': ''
     },
     url: '',
-    guid: ''
+    guid: '',
+    defaults: {
+        description: ''
+    }
 };
 
 
