@@ -31,7 +31,9 @@ app.EditItemView = Item.extend({
         this.$alert = this.$('.alert-box');
         this.$form = this.$('form');
         this.$description = this.$('#description');
-        this.$description.val(app.config.defaults.description || '');
+        if(this.model.get('description').length == 0){
+             this.$description.val(app.config.defaults.description || '');
+        }
         CKEDITOR.config.height = 'auto';
         this.$description.ckeditor();
         this.$department_dropdown = this.$('#department_dropdown');
